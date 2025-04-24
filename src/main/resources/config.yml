@@ -21,6 +21,8 @@ list: # Messages (0-999)
       - '§x§F§B§9§C§0§8╠ &fПо привязке, введите §x§F§B§9§C§0§8/addsocial {HoverText:cmd /addsocial, text: §x§F§B§9§C§0§8Привязать аккаунт}'
       - '§x§F§B§9§C§0§8╚ {HoverText:cmd /addsocial, text: §x§F§B§9§C§0§8Привязать аккаунт}'
     click-url: ""
+    blacklisted_worlds:
+      - Test52
   2:
     permission: ""
     messages:
@@ -31,6 +33,8 @@ list: # Messages (0-999)
       - '§x§F§B§9§C§0§8╠ &fПо привязке, введите §x§F§B§9§C§0§8/addsocial'
       - '§x§F§B§9§C§0§8╚'
     click-url: "https://toolrise.space"
+    blacklisted_worlds:
+      - Test52
   3:
     permission: ""
     messages:
@@ -40,6 +44,8 @@ list: # Messages (0-999)
       - '§x§F§B§9§C§0§8╠ &fТо смело пишите сюда&7: §x§F§B§9§C§0§8t.me/he3haukaX &7&o(С док-вой)'
       - '§x§F§B§9§C§0§8╚'
     click-url: "https://t.me/He3HaukaX"
+    blacklisted_worlds:
+      - Test52
   4:
     permission: ""
     messages:
@@ -48,6 +54,8 @@ list: # Messages (0-999)
       - '§x§F§B§9§C§0§8╠ &fС §x§F§B§9§C§0§8другими&f игроками по команде §x§F§B§9§C§0§8/ah {HoverText:cmd /ah, text: §x§F§B§9§C§0§8Открыть аукцион}'
       - '§x§F§B§9§C§0§8╚ {HoverText:cmd /ah, text: §x§F§B§9§C§0§8Открыть аукцион}'
     click-url: ""
+    blacklisted_worlds:
+      - Test52
   5:
     permission: ""
     messages:
@@ -56,6 +64,8 @@ list: # Messages (0-999)
       - '§x§F§B§9§C§0§8╠ &fВ телеграмм, ссылка&7: §x§F§B§9§C§0§8t.me/toolrise'
       - '§x§F§B§9§C§0§8╚'
     click-url: "https://t.me/toolrise"
+    blacklisted_worlds:
+      - Test52
   6:
     permission: ""
     messages:
@@ -64,5 +74,7 @@ list: # Messages (0-999)
       - '§x§F§B§9§C§0§8╠ &fСвой собственный ТГК&7: §x§F§B§9§C§0§8t.me/hplugin'
       - '§x§F§B§9§C§0§8╚'
     click-url: "https://t.me/hplugin"
+    blacklisted_worlds:
+      - Test52
 
 # Author: https://t.me/hplugin
