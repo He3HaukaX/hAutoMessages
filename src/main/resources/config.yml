@@ -1,0 +1,68 @@
+# Author: https://t.me/hplugin
+
+sound:
+  enable: true
+  type: entity.experience_orb.pickup
+  volume: 0.1
+  pitch: 0.8
+settings:
+  format: RANDOM # LIST/RANDOM
+
+  interval: 180 # In seconds
+
+list: # Messages (0-999)
+  1:
+    permission: ""
+    messages:
+      - '§x§F§B§9§C§0§8╔ {HoverText:cmd /addsocial, text: §x§F§B§9§C§0§8Привязать аккаунт}'
+      - '§x§F§B§9§C§0§8╠ %player_name%&f, участились случаи §x§F§B§9§C§0§8взлома {HoverText:cmd /addsocial, text: §x§F§B§9§C§0§8Привязать аккаунт}'
+      - '§x§F§B§9§C§0§8╠ &fАккаунтов, немедленно §x§F§B§9§C§0§8привяжите&f свой {HoverText:cmd /addsocial, text: §x§F§B§9§C§0§8Привязать аккаунт}'
+      - '§x§F§B§9§C§0§8╠ &fАккаунт к §x§F§B§9§C§0§8&lВК&f, чтобы получить §x§F§B§9§C§0§8помощь {HoverText:cmd /addsocial, text: §x§F§B§9§C§0§8Привязать аккаунт}'
+      - '§x§F§B§9§C§0§8╠ &fПо привязке, введите §x§F§B§9§C§0§8/addsocial {HoverText:cmd /addsocial, text: §x§F§B§9§C§0§8Привязать аккаунт}'
+      - '§x§F§B§9§C§0§8╚ {HoverText:cmd /addsocial, text: §x§F§B§9§C§0§8Привязать аккаунт}'
+    click-url: ""
+  2:
+    permission: ""
+    messages:
+      - '§x§F§B§9§C§0§8╔ '
+      - '§x§F§B§9§C§0§8╠ %player_name%&f, Чтобы §x§F§B§9§C§0§8приобрести&f донат, рубли,'
+      - '§x§F§B§9§C§0§8╠ &fИ прочие §x§F§B§9§C§0§8товары&f, используйте §x§F§B§9§C§0§8&lТОЛЬКО&f наш'
+      - '§x§F§B§9§C§0§8╠ &fОффициальный сайт&7: §x§F§B§9§C§0§8toolrise.space'
+      - '§x§F§B§9§C§0§8╠ &fПо привязке, введите §x§F§B§9§C§0§8/addsocial'
+      - '§x§F§B§9§C§0§8╚'
+    click-url: "https://toolrise.space"
+  3:
+    permission: ""
+    messages:
+      - '§x§F§B§9§C§0§8╔'
+      - '§x§F§B§9§C§0§8╠ &fЕсли вас кикнул §x§F§B§9§C§0§8античит&f,'
+      - '§x§F§B§9§C§0§8╠ &fПроблема с §x§F§B§9§C§0§8донатом&f, &fнашли §x§F§B§9§C§0§8баг&7/§x§F§B§9§C§0§8дюп&f,'
+      - '§x§F§B§9§C§0§8╠ &fТо смело пишите сюда&7: §x§F§B§9§C§0§8t.me/he3haukaX &7&o(С док-вой)'
+      - '§x§F§B§9§C§0§8╚'
+    click-url: "https://t.me/He3HaukaX"
+  4:
+    permission: ""
+    messages:
+      - '§x§F§B§9§C§0§8╔ {HoverText:cmd /ah, text: §x§F§B§9§C§0§8Открыть аукцион}'
+      - '§x§F§B§9§C§0§8╠ &fНе забывайте о способах §x§F§B§9§C§0§8торговле {HoverText:cmd /ah, text: §x§F§B§9§C§0§8Открыть аукцион}'
+      - '§x§F§B§9§C§0§8╠ &fС §x§F§B§9§C§0§8другими&f игроками по команде §x§F§B§9§C§0§8/ah {HoverText:cmd /ah, text: §x§F§B§9§C§0§8Открыть аукцион}'
+      - '§x§F§B§9§C§0§8╚ {HoverText:cmd /ah, text: §x§F§B§9§C§0§8Открыть аукцион}'
+    click-url: ""
+  5:
+    permission: ""
+    messages:
+      - '§x§F§B§9§C§0§8╔'
+      - '§x§F§B§9§C§0§8╠ &fПрисоединяйтесь к нашему §x§F§B§9§C§0§8сообществу'
+      - '§x§F§B§9§C§0§8╠ &fВ телеграмм, ссылка&7: §x§F§B§9§C§0§8t.me/toolrise'
+      - '§x§F§B§9§C§0§8╚'
+    click-url: "https://t.me/toolrise"
+  6:
+    permission: ""
+    messages:
+      - '§x§F§B§9§C§0§8╔'
+      - '§x§F§B§9§C§0§8╠ %player_name%&f, не забывай, что у §x§F§B§9§C§0§8разработчика&f есть'
+      - '§x§F§B§9§C§0§8╠ &fСвой собственный ТГК&7: §x§F§B§9§C§0§8t.me/hplugin'
+      - '§x§F§B§9§C§0§8╚'
+    click-url: "https://t.me/hplugin"
+
+# Author: https://t.me/hplugin
