@@ -60,13 +60,13 @@ public class MessagesManager {
             List<String> messages = config.getConfig().getStringList("list." + i + ".messages");
             String permission = config.getConfig().getString("list." + i + ".permission", "");
             List<String> blacklistedWorlds = config.getConfig().getStringList("list." + i + ".blacklisted_worlds");
-            String clickUrl = config.getConfig().getString("list." + i + ".click-url", "");  // Получаем URL
+            String clickUrl = config.getConfig().getString("list." + i + ".click-url", "");
 
             List<String> coloredMessages = messages.stream()
                     .map(HexSupport::format)
                     .collect(Collectors.toList());
 
-            allMessages.add(new MessageGroup(coloredMessages, permission, blacklistedWorlds, clickUrl));  // Сохраняем clickUrl
+            allMessages.add(new MessageGroup(coloredMessages, permission, blacklistedWorlds, clickUrl));
         }
 
         task = new BukkitRunnable() {
