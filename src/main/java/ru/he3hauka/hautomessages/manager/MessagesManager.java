@@ -34,12 +34,14 @@ public class MessagesManager {
         String permission;
         List<String> blacklistedWorlds;
         String clickUrl;
+        String sound;
 
-        public MessageGroup(List<String> messages, String permission, List<String> blacklistedWorlds, String clickUrl) {
+        public MessageGroup(List<String> messages, String permission, List<String> blacklistedWorlds, String clickUrl, String sound) {
             this.messages = messages;
             this.permission = permission;
             this.blacklistedWorlds = blacklistedWorlds;
             this.clickUrl = clickUrl;
+            this.sound = sound;
         }
     }
 
@@ -61,19 +63,20 @@ public class MessagesManager {
             String permission = config.getConfig().getString("list." + i + ".permission", "");
             List<String> blacklistedWorlds = config.getConfig().getStringList("list." + i + ".blacklisted_worlds");
             String clickUrl = config.getConfig().getString("list." + i + ".click-url", "");
+            String sound = config.getConfig().getString("list." + i + ".sound", "");
 
             List<String> coloredMessages = messages.stream()
                     .map(HexSupport::format)
                     .collect(Collectors.toList());
 
-            allMessages.add(new MessageGroup(coloredMessages, permission, blacklistedWorlds, clickUrl));
+            allMessages.add(new MessageGroup(coloredMessages, permission, blacklistedWorlds, clickUrl, sound));
         }
 
         task = new BukkitRunnable() {
             @Override
             public void run() {
                 if (allMessages.isEmpty()) {
-                    Bukkit.getLogger().warning("Check your config.yml! list = empty!");
+                    Bukkit.getLogger().severe("No messages to send!");
                     return;
                 }
 
@@ -113,14 +116,21 @@ public class MessagesManager {
                     }
                 }
 
-                if (config.sound_enable) {
                     try {
-                        for (Player player : Bukkit.getOnlinePlayers()) {
-                            player.playSound(player.getLocation(), config.sound_type, config.sound_volume, config.sound_pitch);
+                        if (!messageGroup.sound.isEmpty()) {
+                            String[] soundParams = messageGroup.sound.split(":");
+                            if (soundParams.length == 3) {
+                                String soundName = soundParams[0];
+                                float volume = Float.parseFloat(soundParams[1]);
+                                float pitch = Float.parseFloat(soundParams[2]);
+
+                                for (Player player : Bukkit.getOnlinePlayers()) {
+                                    player.playSound(player.getLocation(), soundName, volume, pitch);
+                                }
+                            }
                         }
                     } catch (IllegalArgumentException e) {
-                        Bukkit.getLogger().info("Некорректный тип звука в конфигурации");
-                    }
+                        Bukkit.getLogger().info("Некорректный тип звука или параметры звука в конфигурации");
                 }
 
                 if (Format.valueOf(format) == Format.LIST) {

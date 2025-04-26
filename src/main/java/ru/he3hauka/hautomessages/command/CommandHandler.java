@@ -8,47 +8,43 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.he3hauka.hautomessages.config.Config;
 import ru.he3hauka.hautomessages.manager.MessagesManager;
-import ru.he3hauka.hautomessages.utils.Localization;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static ru.he3hauka.hautomessages.utils.HexSupport.format;
-
 public class CommandHandler implements CommandExecutor, TabCompleter {
     private final MessagesManager messagesManager;
     private final Config config;
-    private String locale;
-    private Localization localization;
 
-    public CommandHandler(MessagesManager messagesManager, Config config, String locale) {
+    public CommandHandler(MessagesManager messagesManager,
+                          Config config) {
         this.messagesManager = messagesManager;
         this.config = config;
-        this.locale = locale;
-        this.localization = new Localization(locale);
     }
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
-        if (args.length == 0) {
-            sendMessage(sender, "§6/" + label + " reload§7|§6start§7|§6stop§7|§6reboot§7|§6index");
-            return true;
+        if (!sender.hasPermission("hautomessages.admin") || !sender.hasPermission("*") || !sender.isOp()) {
+            sender.sendMessage("§7[§x§F§B§9§C§0§8hAutoMessages§7] §fYou don't have enough rights!");
+            return false;
         }
 
-        if (!sender.hasPermission("hautomessages.admin") || !sender.hasPermission("*") || !sender.isOp()) {
-            sendMessage(sender, localization.get("no_permission"));
-            return false;
+        if (args.length == 0) {
+            sender.sendMessage("§x§F§B§9§C§0§8╔");
+            sender.sendMessage("§x§F§B§9§C§0§8╠ §f/" + label + " reload §7(§x§F§B§9§C§0§8Plugin reload§7)");
+            sender.sendMessage("§x§F§B§9§C§0§8╠ §f/" + label + " start §7(§x§F§B§9§C§0§8Start automessage task§7)");
+            sender.sendMessage("§x§F§B§9§C§0§8╠ §f/" + label + " stop §7(§x§F§B§9§C§0§8Stop automessage task§7)");
+            sender.sendMessage("§x§F§B§9§C§0§8╚");
+            return true;
         }
 
         String arg = args[0].toLowerCase();
         switch (arg) {
             case "reload":
             case "reboot": {
-                this.locale = config.locale;
-                this.localization = new Localization(this.locale);
-                sendMessage(sender, localization.get("reloading_plugin"));
+                sender.sendMessage("§7[§x§F§B§9§C§0§8hAutoMessages§7] §fAn attempt to §x§F§B§9§C§0§8restart§f the plugin...!");
                 long startTime = System.currentTimeMillis();
                 messagesManager.stop();
                 messagesManager.allMessages.clear();
@@ -56,48 +52,40 @@ public class CommandHandler implements CommandExecutor, TabCompleter {
                 config.init();
                 messagesManager.start();
                 long reloadTime = System.currentTimeMillis() - startTime;
-                sendMessage(sender, localization.get("plugin_reloaded", reloadTime));
+                sender.sendMessage("§7[§x§F§B§9§C§0§8hAutoMessages§7] §fPlugin refreshed in §x§F§B§9§C§0§8" + reloadTime + "§f ms!");
                 return true;
             }
             case "start": {
-                sendMessage(sender, localization.get("starting_auto_messages"));
+                sender.sendMessage("§7[§x§F§B§9§C§0§8hAutoMessages§7] §fAn attempt to §x§F§B§9§C§0§8start §ftask...!");
                 messagesManager.allMessages.clear();
                 messagesManager.currentIndex = 0;
                 messagesManager.stop();
                 messagesManager.start();
-                sendMessage(sender, localization.get("auto_messages_started"));
+                sender.sendMessage("§7[§x§F§B§9§C§0§8hAutoMessages§7] §fNew task is §x§F§B§9§C§0§8successful§f working!");
                 return true;
             }
             case "stop": {
-                sendMessage(sender, localization.get("stopping_auto_messages"));
+                sender.sendMessage("§7[§x§F§B§9§C§0§8hAutoMessages§7] §fAn attempt to §x§F§B§9§C§0§8stop §ftask...!");
                 messagesManager.allMessages.clear();
                 messagesManager.currentIndex = 0;
                 messagesManager.stop();
-                sendMessage(sender, localization.get("auto_messages_stopped"));
-                return true;
-            }
-            case "index": {
-                messagesManager.allMessages.clear();
-                messagesManager.currentIndex = 0;
-                messagesManager.stop();
-                sendMessage(sender, localization.get("current_index", messagesManager.currentIndex));
+                sender.sendMessage("§7[§x§F§B§9§C§0§8hAutoMessages§7] §fThis task §x§F§B§9§C§0§8successful§f stopped!");
                 return true;
             }
             default:
-                sendMessage(sender, "§6/" + label + " reload§7|§6start§7|§6stop§7|§6reboot§7|§6index");
+                sender.sendMessage("§x§F§B§9§C§0§8╔");
+                sender.sendMessage("§x§F§B§9§C§0§8╠ §f/" + label + " reload §7(§x§F§B§9§C§0§8Plugin reload§7)");
+                sender.sendMessage("§x§F§B§9§C§0§8╠ §f/" + label + " start §7(§x§F§B§9§C§0§8Start automessage task§7)");
+                sender.sendMessage("§x§F§B§9§C§0§8╠ §f/" + label + " stop §7(§x§F§B§9§C§0§8Stop automessage task§7)");
+                sender.sendMessage("§x§F§B§9§C§0§8╚");
                 return true;
         }
-    }
-
-    private void sendMessage(CommandSender sender, String message) {
-        String prefixMessage = config.prefix.isEmpty() ? message : format(config.prefix + (config.prefix.endsWith(" ") ? "" : " ") + message);
-        sender.sendMessage(prefixMessage);
     }
 
     @Override
     public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String alias, @NotNull String[] args) {
         if (args.length == 1) {
-            return Stream.of("reload", "start", "stop", "reboot", "index")
+            return Stream.of("reload", "start", "stop", "reboot")
                     .filter(s -> s.toLowerCase().startsWith(args[0].toLowerCase()))
                     .collect(Collectors.toList());
         }

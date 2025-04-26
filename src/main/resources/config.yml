@@ -1,14 +1,6 @@
-# Author: https://t.me/hplugin
-
-sound:
-  enable: true
-  type: entity.experience_orb.pickup
-  volume: 0.1
-  pitch: 0.8
 settings:
   format: RANDOM # LIST/RANDOM
-
-  interval: 180 # In seconds
+  interval: 2 # In seconds
 
 list: # Messages (0-999)
   1:
@@ -23,6 +15,7 @@ list: # Messages (0-999)
     click-url: ""
     blacklisted_worlds:
       - Test52
+    sound: "entity.player.levelup:1.0:1.0"
   2:
     permission: ""
     messages:
@@ -34,7 +27,7 @@ list: # Messages (0-999)
       - '§x§F§B§9§C§0§8╚'
     click-url: "https://toolrise.space"
     blacklisted_worlds:
-      - Test52
+      - Test52 # The sound is cut out here
   3:
     permission: ""
     messages:
@@ -46,6 +39,7 @@ list: # Messages (0-999)
     click-url: "https://t.me/He3HaukaX"
     blacklisted_worlds:
       - Test52
+    sound: "entity.player.levelup:1.0:1.0"
   4:
     permission: ""
     messages:
@@ -56,6 +50,7 @@ list: # Messages (0-999)
     click-url: ""
     blacklisted_worlds:
       - Test52
+    sound: "block.anvil.use:0.5:0.8"
   5:
     permission: ""
     messages:
@@ -66,6 +61,7 @@ list: # Messages (0-999)
     click-url: "https://t.me/toolrise"
     blacklisted_worlds:
       - Test52
+    sound: "block.anvil.use:0.5:0.8"
   6:
     permission: ""
     messages:
@@ -76,5 +72,4 @@ list: # Messages (0-999)
     click-url: "https://t.me/hplugin"
     blacklisted_worlds:
       - Test52
-
-# Author: https://t.me/hplugin
+    sound: "block.anvil.use:0.5:0.8"

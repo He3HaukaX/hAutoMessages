@@ -4,10 +4,13 @@ import org.bukkit.plugin.java.JavaPlugin;
 import ru.he3hauka.hautomessages.command.CommandHandler;
 import ru.he3hauka.hautomessages.config.Config;
 import ru.he3hauka.hautomessages.manager.MessagesManager;
-import ru.he3hauka.hautomessages.utils.Localization;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 
 public final class Main extends JavaPlugin {
-    private Localization localization;
     @Override
     public void onEnable() {
         saveDefaultConfig();
@@ -16,21 +19,32 @@ public final class Main extends JavaPlugin {
 
         MessagesManager messagesManager = new MessagesManager(config, this);
 
-        localization = new Localization(config.locale);
-
-        getCommand("hautomessages").setExecutor(new CommandHandler(messagesManager, config, config.locale));
-        getCommand("hautomessages").setTabCompleter(new CommandHandler(messagesManager, config,config.locale));
-
-        getLogger().info(localization.get("plugin_started", getDescription().getVersion()));
-        getLogger().info(localization.get("developer_contact"));
+        getCommand("hautomessages").setExecutor(new CommandHandler(messagesManager, config));
+        getCommand("hautomessages").setTabCompleter(new CommandHandler(messagesManager, config));
 
         messagesManager.start();
 
-        new ru.he3hauka.hautomessages.utils.Metrics(this, 24935);
+        authorInfo();
     }
     @Override
     public void onDisable() {
-        getLogger().info(localization.get("plugin_stopped", getDescription().getVersion()));
-        getLogger().info(localization.get("developer_contact"));
+    }
+
+    public void authorInfo(){
+        File file = new File(getDataFolder(), "info.txt");
+
+        if (!file.exists()) {
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        try {
+            Files.copy(getResource("info.txt"), file.toPath(), StandardCopyOption.REPLACE_EXISTING);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
