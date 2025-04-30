@@ -89,48 +89,48 @@ public class MessagesManager {
                 }
 
                 for (String rawMessage : messageGroup.messages) {
-                    for (Player player : Bukkit.getOnlinePlayers()) {
-                        String processedMessage = PlaceholderAPI.setPlaceholders(player, rawMessage);
+                    TextComponent component;
 
-                        Matcher hoverMatcher = HOVER_PATTERN.matcher(processedMessage);
-                        if (hoverMatcher.find()) {
-                            String cmd = hoverMatcher.group(1).trim();
-                            String hoverText = hoverMatcher.group(2).trim();
+                    Matcher hoverMatcher = HOVER_PATTERN.matcher(rawMessage);
+                    if (hoverMatcher.find()) {
+                        String cmd = hoverMatcher.group(1).trim();
+                        String hoverText = hoverMatcher.group(2).trim();
 
-                            processedMessage = processedMessage.substring(0, hoverMatcher.start()) + processedMessage.substring(hoverMatcher.end());
+                        String processedMessage = rawMessage.substring(0, hoverMatcher.start()) +
+                                rawMessage.substring(hoverMatcher.end());
+                        processedMessage = PlaceholderAPI.setPlaceholders(null, processedMessage);
+                        hoverText = PlaceholderAPI.setPlaceholders(null, hoverText);
 
-                            TextComponent message = LegacyComponentSerializer.legacySection().deserialize(processedMessage)
-                                    .hoverEvent(HoverEvent.showText(LegacyComponentSerializer.legacySection().deserialize(hoverText)))
-                                    .clickEvent(ClickEvent.runCommand(cmd));
+                        component = LegacyComponentSerializer.legacySection().deserialize(processedMessage)
+                                .hoverEvent(HoverEvent.showText(LegacyComponentSerializer.legacySection().deserialize(hoverText)))
+                                .clickEvent(ClickEvent.runCommand(cmd));
+                    } else {
+                        String processedMessage = PlaceholderAPI.setPlaceholders(null, rawMessage);
+                        component = LegacyComponentSerializer.legacySection().deserialize(processedMessage);
 
-                            Bukkit.broadcast(message);
-                        } else {
-                            TextComponent component = LegacyComponentSerializer.legacySection().deserialize(processedMessage);
-
-                            if (!messageGroup.clickUrl.isEmpty()) {
-                                component = component.clickEvent(ClickEvent.openUrl(messageGroup.clickUrl));
-                            }
-
-                            Bukkit.broadcast(component);
+                        if (!messageGroup.clickUrl.isEmpty()) {
+                            component = component.clickEvent(ClickEvent.openUrl(messageGroup.clickUrl));
                         }
                     }
+
+                    Bukkit.broadcast(component);
                 }
 
-                    try {
-                        if (!messageGroup.sound.isEmpty()) {
-                            String[] soundParams = messageGroup.sound.split(":");
-                            if (soundParams.length == 3) {
-                                String soundName = soundParams[0];
-                                float volume = Float.parseFloat(soundParams[1]);
-                                float pitch = Float.parseFloat(soundParams[2]);
+                try {
+                    if (!messageGroup.sound.isEmpty()) {
+                        String[] soundParams = messageGroup.sound.split(":");
+                        if (soundParams.length == 3) {
+                            String soundName = soundParams[0];
+                            float volume = Float.parseFloat(soundParams[1]);
+                            float pitch = Float.parseFloat(soundParams[2]);
 
-                                for (Player player : Bukkit.getOnlinePlayers()) {
-                                    player.playSound(player.getLocation(), soundName, volume, pitch);
-                                }
+                            for (Player player : Bukkit.getOnlinePlayers()) {
+                                player.playSound(player.getLocation(), soundName, volume, pitch);
                             }
                         }
-                    } catch (IllegalArgumentException e) {
-                        Bukkit.getLogger().info("Некорректный тип звука или параметры звука в конфигурации");
+                    }
+                } catch (IllegalArgumentException e) {
+                    Bukkit.getLogger().info("Unknown sound type in config.yml!");
                 }
 
                 if (Format.valueOf(format) == Format.LIST) {

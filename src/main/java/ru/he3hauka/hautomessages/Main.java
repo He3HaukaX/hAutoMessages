@@ -4,6 +4,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import ru.he3hauka.hautomessages.command.CommandHandler;
 import ru.he3hauka.hautomessages.config.Config;
 import ru.he3hauka.hautomessages.manager.MessagesManager;
+import ru.he3hauka.hautomessages.update.UpdateChecker;
 
 import java.io.File;
 import java.io.IOException;
@@ -13,6 +14,8 @@ import java.nio.file.StandardCopyOption;
 public final class Main extends JavaPlugin {
     @Override
     public void onEnable() {
+        authorInfo();
+
         saveDefaultConfig();
         Config config = new Config(this);
         config.init();
@@ -24,7 +27,9 @@ public final class Main extends JavaPlugin {
 
         messagesManager.start();
 
-        authorInfo();
+        if (getConfig().getBoolean("settings.update", true)) {
+            new UpdateChecker(this).checkForUpdates();
+        }
     }
     @Override
     public void onDisable() {

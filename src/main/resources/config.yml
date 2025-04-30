@@ -1,4 +1,6 @@
 settings:
+  update: true # Check for updates
+
   format: RANDOM # LIST/RANDOM
   interval: 2 # In seconds
 
