@@ -1,5 +1,5 @@
 name: hAutoMessages
-version: "2.1"
+version: "2.1.1"
 main: ru.he3hauka.hautomessages.Main
 api-version: '1.16'
 softdepend: [PlaceholderAPI]

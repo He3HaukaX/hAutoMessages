@@ -26,17 +26,13 @@ public class CommandHandler implements CommandExecutor, TabCompleter {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
-        if (!sender.hasPermission("hautomessages.admin") || !sender.hasPermission("*") || !sender.isOp()) {
+        if (!sender.hasPermission("hautomessages.admin") || !sender.isOp()) {
             sender.sendMessage("§7[§x§F§B§9§C§0§8hAutoMessages§7] §fYou don't have enough rights!");
             return false;
         }
 
         if (args.length == 0) {
-            sender.sendMessage("§x§F§B§9§C§0§8╔");
-            sender.sendMessage("§x§F§B§9§C§0§8╠ §f/" + label + " reload §7(§x§F§B§9§C§0§8Plugin reload§7)");
-            sender.sendMessage("§x§F§B§9§C§0§8╠ §f/" + label + " start §7(§x§F§B§9§C§0§8Start automessage task§7)");
-            sender.sendMessage("§x§F§B§9§C§0§8╠ §f/" + label + " stop §7(§x§F§B§9§C§0§8Stop automessage task§7)");
-            sender.sendMessage("§x§F§B§9§C§0§8╚");
+            sendHelp(sender, label);
             return true;
         }
 
@@ -73,13 +69,17 @@ public class CommandHandler implements CommandExecutor, TabCompleter {
                 return true;
             }
             default:
-                sender.sendMessage("§x§F§B§9§C§0§8╔");
-                sender.sendMessage("§x§F§B§9§C§0§8╠ §f/" + label + " reload §7(§x§F§B§9§C§0§8Plugin reload§7)");
-                sender.sendMessage("§x§F§B§9§C§0§8╠ §f/" + label + " start §7(§x§F§B§9§C§0§8Start automessage task§7)");
-                sender.sendMessage("§x§F§B§9§C§0§8╠ §f/" + label + " stop §7(§x§F§B§9§C§0§8Stop automessage task§7)");
-                sender.sendMessage("§x§F§B§9§C§0§8╚");
+                sendHelp(sender, label);
                 return true;
         }
+    }
+
+    private void sendHelp(CommandSender sender, String label) {
+        sender.sendMessage("§x§F§B§9§C§0§8╔");
+        sender.sendMessage("§x§F§B§9§C§0§8╠ §f/" + label + " reload §7(§x§F§B§9§C§0§8Plugin reload§7)");
+        sender.sendMessage("§x§F§B§9§C§0§8╠ §f/" + label + " start §7(§x§F§B§9§C§0§8Start automessage task§7)");
+        sender.sendMessage("§x§F§B§9§C§0§8╠ §f/" + label + " stop §7(§x§F§B§9§C§0§8Stop automessage task§7)");
+        sender.sendMessage("§x§F§B§9§C§0§8╚");
     }
 
     @Override

@@ -14,8 +14,6 @@ import java.nio.file.StandardCopyOption;
 public final class Main extends JavaPlugin {
     @Override
     public void onEnable() {
-        authorInfo();
-
         saveDefaultConfig();
         Config config = new Config(this);
         config.init();
@@ -30,6 +28,8 @@ public final class Main extends JavaPlugin {
         if (getConfig().getBoolean("settings.update", true)) {
             new UpdateChecker(this).checkForUpdates();
         }
+
+        authorInfo();
     }
     @Override
     public void onDisable() {
